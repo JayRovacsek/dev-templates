@@ -2,14 +2,14 @@
   description = "A Nix-flake-based Java development environment";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs";
   };
 
   outputs =
     { self
-    , flake-utils
     , nixpkgs
+    , flake-utils
     }:
 
     flake-utils.lib.eachDefaultSystem (system:
@@ -32,7 +32,7 @@
     in
     {
       devShells.default = pkgs.mkShell {
-        buildInputs = with pkgs; [ gradle jdk maven ];
+        packages = with pkgs; [ gradle jdk maven ];
 
         shellHook = ''
           ${pkgs.jdk}/bin/java -version

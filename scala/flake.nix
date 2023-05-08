@@ -2,17 +2,17 @@
   description = "A Nix-flake-based Scala development environment";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs";
   };
 
   outputs =
     { self
-    , flake-utils
     , nixpkgs
+    , flake-utils
     }:
-    flake-utils.lib.eachDefaultSystem (system:
 
+    flake-utils.lib.eachDefaultSystem (system:
     let
       javaVersion = 17;
 
@@ -32,7 +32,7 @@
     in
     {
       devShells.default = pkgs.mkShell {
-        buildInputs = with pkgs; [ scala sbt coursier ];
+        packages = with pkgs; [ scala sbt coursier ];
 
         shellHook = ''
           ${pkgs.scala}/bin/scala -version

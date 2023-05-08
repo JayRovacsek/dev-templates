@@ -2,14 +2,14 @@
   description = "A Nix-flake-based Go 1.17 development environment";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs";
   };
 
   outputs =
     { self
-    , flake-utils
     , nixpkgs
+    , flake-utils
     }:
 
     flake-utils.lib.eachDefaultSystem (system:
@@ -20,7 +20,7 @@
     in
     {
       devShells.default = pkgs.mkShellNoCC {
-        buildInputs = with pkgs; [
+        packages = with pkgs; [
           # go 1.19 (specified by overlay)
           go
 

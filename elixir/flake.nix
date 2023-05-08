@@ -2,14 +2,14 @@
   description = "A Nix-flake-based Elixir development environment";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs";
   };
 
   outputs =
     { self
-    , flake-utils
     , nixpkgs
+    , flake-utils
     }:
 
     flake-utils.lib.eachDefaultSystem (system:
@@ -18,7 +18,7 @@
     in
     {
       devShells.default = pkgs.mkShell {
-        buildInputs = (with pkgs; [ elixir ]) ++
+        packages = (with pkgs; [ elixir ]) ++
           pkgs.lib.optionals (pkgs.stdenv.isLinux) (with pkgs; [ gigalixir inotify-tools libnotify ]) ++ # Linux only
           pkgs.lib.optionals (pkgs.stdenv.isDarwin) (with pkgs; [ terminal-notifier ]) ++ # macOS only
           (with pkgs.darwin.apple_sdk.frameworks; [ CoreFoundation CoreServices ]);

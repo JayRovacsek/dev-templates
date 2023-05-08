@@ -100,6 +100,11 @@
           description = "Protobuf development environment";
         };
 
+        purescript = {
+          path = ./purescript;
+          description = "Purescript development environment";
+        };
+
         python = {
           path = ./python;
           description = "Python development environment";
@@ -169,7 +174,11 @@
         '';
       in
       {
-        devShells = { default = mkShell { buildInputs = [ format update ]; }; };
+        devShells = {
+          default = mkShell {
+            packages = [ format update ];
+          };
+        };
 
         packages = rec {
           default = dvt;

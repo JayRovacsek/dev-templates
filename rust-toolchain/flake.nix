@@ -2,15 +2,15 @@
   description = "A Nix-flake-based Rust development environment";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs";
     rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   outputs =
     { self
-    , flake-utils
     , nixpkgs
+    , flake-utils
     , rust-overlay
     }:
 
@@ -27,7 +27,7 @@
     in
     {
       devShells.default = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [
+        packages = with pkgs; [
           rustToolchain
           openssl
           pkg-config

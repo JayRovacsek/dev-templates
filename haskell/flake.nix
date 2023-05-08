@@ -2,14 +2,14 @@
   description = "A Nix-flake-based Haskell development environment";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs";
   };
 
   outputs =
     { self
-    , flake-utils
     , nixpkgs
+    , flake-utils
     }:
 
     flake-utils.lib.eachDefaultSystem (system:
@@ -18,7 +18,7 @@
     in
     {
       devShells.default = pkgs.mkShell {
-        buildInputs = with pkgs; [ cabal-install ghc ];
+        packages = with pkgs; [ cabal-install ghc ];
 
         shellHook = with pkgs; ''
           ${ghc}/bin/ghc --version
